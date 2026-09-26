@@ -3,7 +3,7 @@ import cantools
 import sys
 
 db = cantools.database.load_file("vehicle.dbc")
-bus = can.interface.Bus(channel='vcan0', bustype='socketcan')
+bus = can.Bus(channel='vcan0', interface='socketcan')
 
 print("[*] Running Automated HIL/SIL Verification Test on vcan0...")
 
@@ -25,7 +25,7 @@ try:
             assert 0.0 <= decoded['FuelTankLevel'] <= 100.0, f"Fuel level sensor error: {decoded['FuelTankLevel']}"
             
             frames_verified += 1
-            print(f"  [PASS] Frame {frames_verified}/{target_frames} validated | RPM: {decoded['EngineSpeed']:.1f} | Temp: {decoded['CoolantTemp']:.1f}C")
+            print(f"  [PASS] Frame {frames_verified:02d}/{target_frames} validated | RPM: {decoded['EngineSpeed']:.1f} | Temp: {decoded['CoolantTemp']:.1f}C")
             
             if frames_verified >= target_frames:
                 print("\n[SUCCESS] 100% of telemetry frames met CAN physical layer specifications!")
