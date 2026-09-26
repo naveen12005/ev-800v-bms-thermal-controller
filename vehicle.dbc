@@ -1,0 +1,15 @@
+VERSION ""
+
+NS_ :
+
+BS_:
+
+BU_: ECU_ENGINE CLUSTER
+
+BO_ 256 EngineData: 8 ECU_ENGINE
+ SG_ EngineSpeed : 0|16@1+ (0.25,0) [0|8000] "rpm" CLUSTER
+ SG_ EngineTemp : 16|8@1+ (1,-40) [-40|215] "degC" CLUSTER
+ SG_ ThrottlePos : 24|8@1+ (0.39215686,0) [0|100] "%" CLUSTER
+
+BO_ 257 VehicleSpeedData: 8 ECU_ENGINE
+ SG_ VehicleSpeed : 0|16@1+ (0.01,0) [0|250] "km/h" CLUSTER
