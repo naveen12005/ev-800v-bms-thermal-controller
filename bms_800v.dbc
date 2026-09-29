@@ -1,0 +1,24 @@
+VERSION ""
+
+NS_ :
+
+BS_:
+
+BU_: BMS_MASTER DC_CHARGER THERMAL_MGMT
+
+BO_ 528 BMS_PackMetrics: 8 BMS_MASTER
+ SG_ PackVoltage : 0|16@1+ (0.1,0) [0|1000] "V" DC_CHARGER,THERMAL_MGMT
+ SG_ PackCurrent : 16|16@1- (0.1,0) [-600|600] "A" DC_CHARGER,THERMAL_MGMT
+ SG_ StateOfCharge : 32|8@1+ (0.5,0) [0|100] "%" DC_CHARGER,THERMAL_MGMT
+ SG_ MaxCellTemp : 40|8@1+ (1,-40) [-40|120] "degC" DC_CHARGER,THERMAL_MGMT
+ SG_ DeratingActive : 48|1@1+ (1,0) [0|1] "" DC_CHARGER
+
+BO_ 529 BMS_ChargeLimits: 8 BMS_MASTER
+ SG_ MaxAllowableCurrent : 0|16@1+ (0.1,0) [0|500] "A" DC_CHARGER
+ SG_ TargetVoltage : 16|16@1+ (0.1,0) [0|1000] "V" DC_CHARGER
+ SG_ ThermalGradient : 32|8@1+ (0.1,0) [0|20] "degC/min" THERMAL_MGMT
+
+BO_ 530 BMS_Faults: 8 BMS_MASTER
+ SG_ ThermalRunawayTrip : 0|1@1+ (1,0) [0|1] "" DC_CHARGER,THERMAL_MGMT
+ SG_ OverVoltageFault : 1|1@1+ (1,0) [0|1] "" DC_CHARGER
+ SG_ ContactorStatus : 2|1@1+ (1,0) [0|1] "" DC_CHARGER

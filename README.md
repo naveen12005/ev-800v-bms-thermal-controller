@@ -1,16 +1,56 @@
-# K15B Engine CAN Telemetry & Diagnostics Emulator
+\# 800V High-Power EV BMS \& Fast-Charging Thermal Derating Controller
 
-An in-vehicle networking simulation environment modeling the Maruti/Denso K15B 1.5L naturally aspirated powertrain over Linux SocketCAN.
 
-## Features
-- **DBC Specification:** Custom CAN database (vehicle.dbc) defining physical layer signal scaling, offsets, and bit packing for engine dynamics.
-- **Physical State Modeling:** Simulates cold-start fast idle, thermal stabilization (ambient to 90°C), manual gear shift progression, and load-proportional fuel consumption.
-- **Verification Suite:** Automated frame validation pipeline checking signal limits against automotive safety margins.
 
-## How to Run
-```bash
-sudo modprobe vcan
-sudo ip link add dev vcan0 type vcan && sudo ip link set up vcan0
-python3 ecu_simulator.py &
-python3 test_pipeline.py
-```
+An advanced Battery Management System (BMS) modeling an 800V, 75 kWh liquid-cooled battery pack with dynamic electro-thermal physics and automated ASIL-D safety derating under 350 kW DC ultra-fast charging.
+
+
+
+\## System Architecture
+
+
+
+```text
+
++-------------------------------------------------------------+
+
+|             DC Fast Charger (350 kW Dispenser)              |
+
+|   - Dynamically modulates output current (0 - 430A)         |
+
+|   - Respects BMS current limits via CAN arbitration ID 0x211|
+
++------------------------------+------------------------------+
+
+&#x20;                              |
+
+&#x20;                  CAN 0x211: BMS\_ChargeLimits
+
+&#x20;                  (MaxAllowableCurrent, Gradient)
+
+&#x20;                              v
+
+&#x20;   ======================= vcan0 =======================
+
+&#x20;                              ^
+
+&#x20;                  CAN 0x210: BMS\_PackMetrics
+
+&#x20;                  (PackVoltage, PackCurrent, Temp, SoC)
+
+&#x20;                              |
+
++------------------------------+------------------------------+
+
+|            800V BMS Controller \& Thermal Plant              |
+
+|  - Closed-Loop Multi-Stage Thermal \& Gradient Derating      |
+
+|  - Dynamic Arrhenius Internal Resistance Modeling           |
+
+|  - Constant Current / Constant Voltage (CC-CV) Handover     |
+
+|  - Slew-rate limiting (150 A/s) to mitigate inductive spikes|
+
++-------------------------------------------------------------+
+
