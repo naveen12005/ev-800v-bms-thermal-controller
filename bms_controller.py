@@ -6,7 +6,7 @@ class BMSDeratingController:
     def __init__(self, max_slew_rate_a_per_sec=150.0):
         self.max_slew = max_slew_rate_a_per_sec
         self.last_commanded_current = 0.0
-        self.temp_history = deque(maxlen=20)  # Sliding window for gradient calculation
+        self.temp_history = deque(maxlen=20)
         self.mode = "CC_FAST_CHARGE"
         self.derating_active = False
 
@@ -14,28 +14,28 @@ class BMSDeratingController:
         self.temp_history.append(current_temp)
         if len(self.temp_history) < 2:
             return 0.0
-        # Rate of temperature change in deg C per minute
         delta_t = self.temp_history[-1] - self.temp_history[0]
         window_duration_min = ((len(self.temp_history) - 1) * dt_sec) / 60.0
         return max(0.0, delta_t / window_duration_min) if window_duration_min > 0 else 0.0
 
     def compute_current_limit(self, pack_v, cell_temp, thermal_grad):
-        # 1. Critical Safety Trip (Thermal runaway cutoff at 55 deg C)
-        if cell_temp >= 55.0 or pack_v >= 840.0:
+        # 1. ASIL-D Emergency Cutoff: Immediate isolation on thermal trip or hard overvoltage
+        if cell_temp >= 55.0 or pack_v >= 839.5:
             self.mode = "FAULT_EMERGENCY_SHUTDOWN"
             self.derating_active = True
             return 0.0
 
-        # 2. Constant Voltage (CV) Handover near upper ceiling (838V)
-        if pack_v >= 838.0:
+        # 2. Predictive Constant Voltage (CV) Taper: Begins at 825V to prevent IR overshoot
+        if pack_v >= 825.0:
             self.mode = "CV_TAPER"
             self.derating_active = True
-            # Taper smoothly down to trickle charge (25A)
-            overage = pack_v - 838.0
-            return max(25.0, 430.0 - (overage * 180.0))
+            headroom = max(0.0, 839.0 - pack_v)
+            # Linearly scale allowed current down as pack approaches 839.0V
+            tapered_current = 20.0 + (headroom / 14.0) * 200.0
+            return max(0.0, min(430.0, tapered_current))
 
         # 3. Multi-Stage Thermal & Gradient Derating
-        target_current = 430.0  # Baseline 350 kW class current (430A @ 800V)
+        target_current = 430.0
         derating = False
 
         if cell_temp >= 47.0 or thermal_grad > 5.0:
@@ -53,6 +53,11 @@ class BMSDeratingController:
         return target_current
 
     def apply_slew_rate(self, target_current, dt_sec=0.05):
+        # If in emergency shutdown or hard overvoltage protection, drop current immediately without slew delay
+        if self.mode == "FAULT_EMERGENCY_SHUTDOWN":
+            self.last_commanded_current = 0.0
+            return 0.0
+
         max_step = self.max_slew * dt_sec
         delta = target_current - self.last_commanded_current
         if abs(delta) > max_step:

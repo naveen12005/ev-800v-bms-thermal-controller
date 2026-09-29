@@ -11,7 +11,6 @@ class TestBMSDeratingSafetyPipeline(unittest.TestCase):
 
     def test_01_derating_reaction_time_within_50ms(self):
         """ISO 26262 ASIL-D Timing Requirement: Current derate command within 50ms of thermal threshold."""
-        # Force pack directly onto the 45.0 C derate boundary
         self.plant.temp_c = 45.1
         grad = self.ctrl.update_gradient(self.plant.temp_c, dt_sec=0.05)
         req_current = self.ctrl.compute_current_limit(self.plant.pack_voltage, self.plant.temp_c, grad)
@@ -22,12 +21,13 @@ class TestBMSDeratingSafetyPipeline(unittest.TestCase):
     def test_02_pack_voltage_never_exceeds_840v(self):
         """ASIL-D Overvoltage Invariant: Pack voltage must not exceed 840.0V under continuous charging."""
         self.plant.soc = 98.0
-        act_current = 100.0
-        for _ in range(200):  # 10 seconds of charging near 100%
-            state = self.plant.step(act_current, dt_sec=0.05)
-            grad = self.ctrl.update_gradient(state['temp'], dt_sec=0.05)
-            req = self.ctrl.compute_current_limit(state['voltage'], state['temp'], grad)
+        # Initialize loop from current plant state
+        for _ in range(200):
+            grad = self.ctrl.update_gradient(self.plant.temp_c, dt_sec=0.05)
+            req = self.ctrl.compute_current_limit(self.plant.pack_voltage, self.plant.temp_c, grad)
             act_current = self.ctrl.apply_slew_rate(req, dt_sec=0.05)
+            state = self.plant.step(act_current, dt_sec=0.05)
+            
             self.assertLessEqual(state['voltage'], 840.0, f"Overvoltage detected: {state['voltage']}V")
 
     def test_03_thermal_runaway_trip_at_55c(self):
