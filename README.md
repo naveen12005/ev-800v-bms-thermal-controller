@@ -158,3 +158,23 @@ The models and mathematical equations in this repository are rigorously grounded
 8. **ISO 26262-1:2018.** *Road Vehicles — Functional Safety.* ISO. *(ASIL-D reaction time constraints, dual-node core temperature safety invariants, and contactor isolation).*
 9. **ISO 14229-1:2020.** *Road Vehicles — Unified Diagnostic Services (UDS).* ISO. *(Diagnostic trouble code emission: P0A7E, P0A80, P0B24).*
 10. **SAE J1939 / ISO 11898.** *Controller Area Network (CAN) Protocol Framework.* SAE International. *(DBC signal packing and CAN arbitration).*
+
+---
+
+## 9. 👨‍💻 Author & Attribution
+- **Lead Systems Engineer:** RATHLAVATH NAVEEN
+- **Email:** [rathlavathnaveen90@gmail.com](mailto:rathlavathnaveen90@gmail.com)
+- **Profile:** [github.com/naveen12005](https://github.com/naveen12005)
+- **Toolchain:** Python 3.10+, Siemens NX Design Center, OpenCASCADE 7.9 / CadQuery, Cantools / SocketCAN, Matplotlib.
+
+---
+
+## 10. ⚖️ License & Intellectual Property Protection
+**Copyright © 2026 RATHLAVATH NAVEEN. All Rights Reserved.**
+
+This repository and all associated digital assets (including 3D CAD STEP models, electrochemical equivalent circuit models, CFD/FEA solvers, ASIL-D safety derating algorithms, DBC matrices, and technical documentation) are protected under international copyright law and the **Proprietary Portfolio Evaluation License** (incorporating CC BY-NC-ND 4.0 terms).
+
+* **Permitted Use:** Granted strictly for read-only inspection, portfolio evaluation, academic review, and recruitment/hiring assessment.
+* **Prohibited Use:** No unauthorized redistribution, no commercial exploitation or ECU deployment, no derivative works, and **no academic plagiarism**.
+* See the full [LICENSE](LICENSE) file for complete legal terms.
+

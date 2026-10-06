@@ -454,6 +454,21 @@ def generate_report(output_docx_path, figures_dir):
         "It validates mastery across CAD design, fluid dynamics, heat transfer, ISO 26262 functional safety (ASIL-D), and embedded automotive software."
     )
 
+    # -------------------------------------------------------------
+    # 9. Author & Intellectual Property Notice
+    # -------------------------------------------------------------
+    add_header_styled(doc, "9. Author & Intellectual Property Notice", level=1)
+    p_auth = doc.add_paragraph()
+    r_auth = p_auth.add_run("Author / Lead Systems Engineer: ")
+    r_auth.font.bold = True
+    p_auth.add_run("RATHLAVATH NAVEEN (rathlavathnaveen90@gmail.com)\n")
+    r_repo = p_auth.add_run("Repository: ")
+    r_repo.font.bold = True
+    p_auth.add_run("https://github.com/naveen12005/ev-800v-bms-thermal-controller\n")
+    r_lic = p_auth.add_run("Copyright & License: ")
+    r_lic.font.bold = True
+    p_auth.add_run("Copyright © 2026 RATHLAVATH NAVEEN. Protected under Proprietary Portfolio Evaluation License (CC BY-NC-ND 4.0 terms).")
+
     doc.save(output_docx_path)
     print(f"Comprehensive Word Document (.docx) with CFD analysis and citations created at: {output_docx_path}")
 
