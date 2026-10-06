@@ -1,0 +1,28 @@
+{
+    "baseline": {
+        "design_type": "BASELINE_SERPENTINE",
+        "flow_rate_lpm": 8.0,
+        "velocity_m_s": 1.587,
+        "reynolds_number": 5680.0,
+        "h_conv_w_m2k": 3218.9,
+        "pressure_drop_kpa": 21.45,
+        "pumping_power_w": 6.36,
+        "delta_t_coolant_c": 2.97,
+        "cell_gradient_delta_t_c": 4.01,
+        "thermal_resistance_k_w": 0.0142,
+        "conductance_w_per_k": 70.3
+    },
+    "optimized": {
+        "design_type": "OPTIMIZED_PARALLEL",
+        "flow_rate_lpm": 8.0,
+        "velocity_m_s": 0.159,
+        "reynolds_number": 436.9,
+        "h_conv_w_m2k": 300.9,
+        "pressure_drop_kpa": 1.31,
+        "pumping_power_w": 0.39,
+        "delta_t_coolant_c": 2.97,
+        "cell_gradient_delta_t_c": 1.34,
+        "thermal_resistance_k_w": 0.031,
+        "conductance_w_per_k": 32.3
+    }
+}
