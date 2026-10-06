@@ -101,3 +101,16 @@ python3 bms_controller.py
 # 3. Run Automated Unit Test Suite
 python3 -m unittest -v test_bms_derating.py
 ```
+
+---
+
+## 6. Academic References & Standards
+
+1. **Gnielinski, V. (1976).** *"New equations for heat and mass transfer in turbulent pipe and channel flow."* *International Chemical Engineering*, 16(2), 359–368.
+2. **Petukhov, B. S. (1970).** *"Heat transfer and friction in turbulent pipe flow with variable physical properties."* *Advances in Heat Transfer*, 6, 503–564.
+3. **Shah, R. K., & London, A. L. (1978).** *Laminar Flow Forced Convection in Ducts.* Academic Press.
+4. **Tuckerman, D. B., & Pease, R. F. (1981).** *"High-performance heat sinking for VLSI."* *IEEE Electron Device Letters*, 2(5), 126–129.
+5. **Yang, X. G., Zhang, G., Ge, S., & Wang, C. Y. (2018).** *"Fast charging of lithium-ion batteries at all temperatures without lithium plating."* *Nature Energy*, 3(8), 674–686.
+6. **Hu, X., Li, S., & Peng, H. (2012).** *"A comparative study of equivalent circuit models for Li-ion batteries."* *Journal of Power Sources*, 198, 359–367.
+7. **ISO 26262-1:2018.** *Road Vehicles — Functional Safety.* ISO.
+8. **ISO 14229-1:2020.** *Road Vehicles — Unified Diagnostic Services (UDS).* ISO.
